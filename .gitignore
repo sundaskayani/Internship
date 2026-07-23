@@ -1,0 +1,14 @@
+# Executable files
+*.exe
+
+# Object files
+*.o
+
+# Visual Studio Code settings
+.vscode/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
