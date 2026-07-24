@@ -1,25 +1,40 @@
 #include <iostream>
 using namespace std;
 
-int main()
+void showMenu()
 {
-    int choice;
-
     cout << " Student Grade Tracker " << endl;
     cout << "1. Add Student" << endl;
     cout << "2. View Students" << endl;
     cout << "3. Exit" << endl;
+}
+
+void addStudent()
+{
+    cout << "Add Student feature coming soon..." << endl;
+}
+
+void viewStudents()
+{
+    cout << "View Students feature coming soon..." << endl;
+}
+
+int main()
+{
+    int choice;
+
+    showMenu();
 
     cout << "\nEnter your choice: ";
     cin >> choice;
 
     if (choice == 1)
     {
-        cout << "Add Student feature coming soon..." << endl;
+        addStudent();
     }
     else if (choice == 2)
     {
-        cout << "View Students feature coming soon..." << endl;
+        viewStudents();
     }
     else if (choice == 3)
     {
