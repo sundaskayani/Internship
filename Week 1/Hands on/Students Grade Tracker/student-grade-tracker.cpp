@@ -14,15 +14,27 @@ void showMenu()
     cout << "3. Exit" << endl;
 }
 
-void addStudent()
+void addStudent(string &name, int &marks)
 {
     if (studentCount < 10)
     {
         cout << "Enter Student Name: ";
-        cin >> studentNames[studentCount];
+        cin >> name;
 
-        cout << "Enter Student Marks: ";
-        cin >> studentMarks[studentCount];
+        do
+        {
+            cout << "Enter Student Marks (0-100): ";
+            cin >> marks;
+
+            if (marks < 0 || marks > 100)
+            {
+                cout << "Invalid marks! Please enter marks between 0 and 100.\n";
+            }
+
+        } while (marks < 0 || marks > 100);
+
+        studentNames[studentCount] = name;
+        studentMarks[studentCount] = marks;
 
         studentCount++;
 
@@ -38,7 +50,7 @@ void viewStudents()
 {
     if (studentCount == 0)
     {
-        cout << "No students added yet." << endl;
+        cout << "\nNo students added yet." << endl;
         return;
     }
 
@@ -46,16 +58,22 @@ void viewStudents()
 
     for (int i = 0; i < studentCount; i++)
     {
+    
+        int *ptrMarks = &studentMarks[i];
+
         cout << "Student " << i + 1 << endl;
         cout << "Name  : " << studentNames[i] << endl;
-        cout << "Marks : " << studentMarks[i] << endl;
-        cout << endl;
+        cout << "Marks : " << *ptrMarks << endl;
+        cout << "------------------------" << endl;
     }
 }
 
 int main()
 {
     int choice;
+
+    string name;
+    int marks;
 
     do
     {
@@ -66,20 +84,20 @@ int main()
 
         switch (choice)
         {
-            case 1:
-                addStudent();
-                break;
+        case 1:
+            addStudent(name, marks);
+            break;
 
-            case 2:
-                viewStudents();
-                break;
+        case 2:
+            viewStudents();
+            break;
 
-            case 3:
-                cout << "Goodbye!" << endl;
-                break;
+        case 3:
+            cout << "Goodbye!" << endl;
+            break;
 
-            default:
-                cout << "Invalid Choice!" << endl;
+        default:
+            cout << "Invalid Choice!" << endl;
         }
 
     } while (choice != 3);
