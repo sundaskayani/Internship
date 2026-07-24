@@ -2,78 +2,93 @@
 #include <string>
 using namespace std;
 
-string studentNames[10];
-int studentMarks[10];
+struct Student
+{
+    string name;
+    int marks;
+};
+
+Student students[10];
 int studentCount = 0;
 
 void showMenu()
 {
-    cout << "\n Student Grade Tracker " << endl;
+    cout << "\n===== Student Grade Tracker =====" << endl;
     cout << "1. Add Student" << endl;
     cout << "2. View Students" << endl;
-    cout << "3. Exit" << endl;
+    cout << "3. Calculate Average" << endl;
+    cout << "4. Exit" << endl;
 }
 
-void addStudent(string &name, int &marks)
+void addStudent()
 {
-    if (studentCount < 10)
-    {
-        cout << "Enter Student Name: ";
-        cin >> name;
-
-        do
-        {
-            cout << "Enter Student Marks (0-100): ";
-            cin >> marks;
-
-            if (marks < 0 || marks > 100)
-            {
-                cout << "Invalid marks! Please enter marks between 0 and 100.\n";
-            }
-
-        } while (marks < 0 || marks > 100);
-
-        studentNames[studentCount] = name;
-        studentMarks[studentCount] = marks;
-
-        studentCount++;
-
-        cout << "Student added successfully!" << endl;
-    }
-    else
+    if (studentCount >= 10)
     {
         cout << "Student list is full!" << endl;
+        return;
     }
+
+    cout << "Enter Student Name: ";
+    cin >> students[studentCount].name;
+
+    do
+    {
+        cout << "Enter Student Marks (0-100): ";
+        cin >> students[studentCount].marks;
+
+        if (students[studentCount].marks < 0 || students[studentCount].marks > 100)
+        {
+            cout << "Invalid marks! Please enter marks between 0 and 100." << endl;
+        }
+
+    } while (students[studentCount].marks < 0 || students[studentCount].marks > 100);
+
+    studentCount++;
+
+    cout << "Student added successfully!" << endl;
 }
 
 void viewStudents()
 {
     if (studentCount == 0)
     {
-        cout << "\nNo students added yet." << endl;
+        cout << "No students added yet." << endl;
         return;
     }
 
-    cout << "\nStudent Records " << endl;
+    cout << "\n===== Student Records =====" << endl;
 
     for (int i = 0; i < studentCount; i++)
     {
-    
-        int *ptrMarks = &studentMarks[i];
-
-        cout << "Student " << i + 1 << endl;
-        cout << "Name  : " << studentNames[i] << endl;
-        cout << "Marks : " << *ptrMarks << endl;
-        cout << "------------------------" << endl;
+        cout << "\nStudent " << i + 1 << endl;
+        cout << "Name  : " << students[i].name << endl;
+        cout << "Marks : " << students[i].marks << endl;
     }
+}
+
+void calculateAverage()
+{
+    if (studentCount == 0)
+    {
+        cout << "No students available." << endl;
+        return;
+    }
+
+    int total = 0;
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        total += students[i].marks;
+    }
+
+    double average = (double)total / studentCount;
+
+    cout << "\nAverage Marks = " << average << endl;
 }
 
 int main()
 {
     int choice;
-
-    string name;
-    int marks;
 
     do
     {
@@ -85,7 +100,7 @@ int main()
         switch (choice)
         {
         case 1:
-            addStudent(name, marks);
+            addStudent();
             break;
 
         case 2:
@@ -93,14 +108,18 @@ int main()
             break;
 
         case 3:
-            cout << "Goodbye!" << endl;
+            calculateAverage();
+            break;
+
+        case 4:
+            cout << "Thank you for using Student Grade Tracker!" << endl;
             break;
 
         default:
             cout << "Invalid Choice!" << endl;
         }
 
-    } while (choice != 3);
+    } while (choice != 4);
 
     return 0;
 }
