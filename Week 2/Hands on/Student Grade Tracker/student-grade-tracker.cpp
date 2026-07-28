@@ -11,7 +11,6 @@ private:
     int science;
 
 public:
-    
     Student()
     {
         name = "";
@@ -19,60 +18,130 @@ public:
         math = 0;
         science = 0;
     }
+
+    void setName(string n)
+    {
+        name = n;
+    }
+
+    void setEnglish(int e)
+    {
+        english = e;
+    }
+
+    void setMath(int m)
+    {
+        math = m;
+    }
+
+    void setScience(int s)
+    {
+        science = s;
+    }
+
+    string getName()
+    {
+        return name;
+    }
+
+    int getEnglish()
+    {
+        return english;
+    }
+
+    int getMath()
+    {
+        return math;
+    }
+
+    int getScience()
+    {
+        return science;
+    }
+
     void input()
     {
+        string n;
+        int e, m, s;
+
         cout << "\nEnter Student Name: ";
-        cin >> name;
+        cin >> n;
+        setName(n);
 
         do
         {
             cout << "Enter English Marks (0-100): ";
-            cin >> english;
+            cin >> e;
 
-            if (english < 0 || english > 100)
-            {
+            if (e < 0 || e > 100)
                 cout << "Invalid marks! Please enter marks between 0 and 100.\n";
-            }
 
-        } while (english < 0 || english > 100);
+        } while (e < 0 || e > 100);
+
+        setEnglish(e);
 
         do
         {
             cout << "Enter Math Marks (0-100): ";
-            cin >> math;
+            cin >> m;
 
-            if (math < 0 || math > 100)
-            {
+            if (m < 0 || m > 100)
                 cout << "Invalid marks! Please enter marks between 0 and 100.\n";
-            }
 
-        } while (math < 0 || math > 100);
+        } while (m < 0 || m > 100);
+
+        setMath(m);
 
         do
         {
             cout << "Enter Science Marks (0-100): ";
-            cin >> science;
+            cin >> s;
 
-            if (science < 0 || science > 100)
-            {
+            if (s < 0 || s > 100)
                 cout << "Invalid marks! Please enter marks between 0 and 100.\n";
-            }
 
-        } while (science < 0 || science > 100);
+        } while (s < 0 || s > 100);
+
+        setScience(s);
     }
 
     double calculateAverage()
     {
-        return (english + math + science) / 3.0;
+        return (getEnglish() + getMath() + getScience()) / 3.0;
     }
 
-    void display()
+    virtual void display()
     {
-        cout << "\nName     : " << name << endl;
-        cout << "English  : " << english << endl;
-        cout << "Math     : " << math << endl;
-        cout << "Science  : " << science << endl;
+        cout << "\nName     : " << getName() << endl;
+        cout << "English  : " << getEnglish() << endl;
+        cout << "Math     : " << getMath() << endl;
+        cout << "Science  : " << getScience() << endl;
         cout << "Average  : " << calculateAverage() << endl;
+    }
+
+    virtual ~Student() {}
+};
+
+class PremiumStudent : public Student
+{
+private:
+    double scholarship;
+
+public:
+    PremiumStudent()
+    {
+        scholarship = 0;
+    }
+
+    void setScholarship(double s)
+    {
+        scholarship = s;
+    }
+
+    void display() override
+    {
+        Student::display();
+        cout << "Scholarship : " << scholarship << endl;
     }
 };
 
@@ -84,7 +153,8 @@ void showMenu()
     cout << "\n Student Grade Tracker " << endl;
     cout << "1. Add Student" << endl;
     cout << "2. View Students" << endl;
-    cout << "3. Exit" << endl;
+    cout << "3. Premium Student Demo" << endl;
+    cout << "4. Exit" << endl;
 }
 
 void addStudent()
@@ -109,13 +179,24 @@ void viewStudents()
         return;
     }
 
-    cout << "\n Student Records " << endl;
+    cout << "\nStudent Records" << endl;
 
     for (int i = 0; i < studentCount; i++)
     {
         cout << "\nStudent " << i + 1 << endl;
         students[i].display();
     }
+}
+
+void premiumStudentDemo()
+{
+    PremiumStudent p1;
+
+    p1.input();
+    p1.setScholarship(5000);
+
+    cout << "\nPremium Student" << endl;
+    p1.display();
 }
 
 int main()
@@ -140,6 +221,10 @@ int main()
             break;
 
         case 3:
+            premiumStudentDemo();
+            break;
+
+        case 4:
             cout << "\nThank you for using Student Grade Tracker!" << endl;
             break;
 
@@ -147,7 +232,7 @@ int main()
             cout << "\nInvalid choice! Please try again." << endl;
         }
 
-    } while (choice != 3);
+    } while (choice != 4);
 
     return 0;
 }
