@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class Student
@@ -145,8 +146,7 @@ public:
     }
 };
 
-Student students[10];
-int studentCount = 0;
+vector<Student> students;
 
 void showMenu()
 {
@@ -159,29 +159,26 @@ void showMenu()
 
 void addStudent()
 {
-    if (studentCount >= 10)
-    {
-        cout << "Student list is full!" << endl;
-        return;
-    }
+    Student s;
 
-    students[studentCount].input();
-    studentCount++;
+    s.input();
+
+    students.push_back(s);
 
     cout << "\nStudent added successfully!" << endl;
 }
 
 void viewStudents()
 {
-    if (studentCount == 0)
+    if (students.empty())
     {
         cout << "\nNo students added yet." << endl;
         return;
     }
 
-    cout << "\nStudent Records" << endl;
+    cout << "\n Student Records " << endl;
 
-    for (int i = 0; i < studentCount; i++)
+    for (int i = 0; i < students.size(); i++)
     {
         cout << "\nStudent " << i + 1 << endl;
         students[i].display();
@@ -195,7 +192,7 @@ void premiumStudentDemo()
     p1.input();
     p1.setScholarship(5000);
 
-    cout << "\nPremium Student" << endl;
+    cout << "\n Premium Student " << endl;
     p1.display();
 }
 
