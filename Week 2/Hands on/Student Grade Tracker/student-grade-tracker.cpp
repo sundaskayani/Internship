@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
+#include <algorithm>
 using namespace std;
 
 class Student
@@ -120,6 +122,11 @@ public:
         cout << "Average  : " << calculateAverage() << endl;
     }
 
+    bool operator<(const Student &other) const
+    {
+        return name < other.name;
+    }
+
     virtual ~Student() {}
 };
 
@@ -147,14 +154,17 @@ public:
 };
 
 vector<Student> students;
-
+map<int, string> studentDirectory;
+int nextStudentID = 1001;
 void showMenu()
 {
     cout << "\n Student Grade Tracker " << endl;
     cout << "1. Add Student" << endl;
     cout << "2. View Students" << endl;
-    cout << "3. Premium Student Demo" << endl;
-    cout << "4. Exit" << endl;
+    cout << "3. Sort Students by Name" << endl;
+    cout << "4. View Student Directory" << endl;
+    cout << "5. Premium Student Demo" << endl;
+    cout << "6. Exit" << endl;
 }
 
 void addStudent()
@@ -165,7 +175,13 @@ void addStudent()
 
     students.push_back(s);
 
+    pair<int, string> studentRecord(nextStudentID, s.getName());
+    studentDirectory.insert(studentRecord);
+
     cout << "\nStudent added successfully!" << endl;
+    cout << "Student ID : " << nextStudentID << endl;
+
+    nextStudentID++;
 }
 
 void viewStudents()
@@ -185,6 +201,36 @@ void viewStudents()
     }
 }
 
+void sortStudents()
+{
+    if (students.empty())
+    {
+        cout << "\nNo students available." << endl;
+        return;
+    }
+
+    sort(students.begin(), students.end());
+
+    cout << "\nStudents sorted successfully!" << endl;
+}
+
+void viewStudentDirectory()
+{
+    if (studentDirectory.empty())
+    {
+        cout << "\nNo student records found." << endl;
+        return;
+    }
+
+    cout << "\n Student Directory " << endl;
+
+    for (auto record : studentDirectory)
+    {
+        cout << "Student ID : " << record.first
+             << "   Name : " << record.second << endl;
+    }
+}
+
 void premiumStudentDemo()
 {
     PremiumStudent p1;
@@ -192,7 +238,7 @@ void premiumStudentDemo()
     p1.input();
     p1.setScholarship(5000);
 
-    cout << "\n Premium Student " << endl;
+    cout << "\nPremium Student" << endl;
     p1.display();
 }
 
@@ -218,10 +264,18 @@ int main()
             break;
 
         case 3:
-            premiumStudentDemo();
+            sortStudents();
             break;
 
         case 4:
+            viewStudentDirectory();
+            break;
+
+        case 5:
+            premiumStudentDemo();
+            break;
+
+        case 6:
             cout << "\nThank you for using Student Grade Tracker!" << endl;
             break;
 
@@ -229,7 +283,7 @@ int main()
             cout << "\nInvalid choice! Please try again." << endl;
         }
 
-    } while (choice != 4);
+    } while (choice != 6);
 
     return 0;
 }
