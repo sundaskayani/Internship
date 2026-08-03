@@ -156,17 +156,19 @@ public:
 vector<Student> students;
 map<int, string> studentDirectory;
 int nextStudentID = 1001;
+
 void showMenu()
 {
-    cout << "\n Student Grade Tracker " << endl;
+    cout << "       Student Grade Tracker" << endl;
     cout << "1. Add Student" << endl;
     cout << "2. View Students" << endl;
     cout << "3. Sort Students by Name" << endl;
     cout << "4. View Student Directory" << endl;
-    cout << "5. Premium Student Demo" << endl;
-    cout << "6. Exit" << endl;
+    cout << "5. Search Student" << endl;
+    cout << "6. Total Students" << endl;
+    cout << "7. Premium Student Demo" << endl;
+    cout << "8. Exit" << endl;
 }
-
 void addStudent()
 {
     Student s;
@@ -222,7 +224,7 @@ void viewStudentDirectory()
         return;
     }
 
-    cout << "\n Student Directory " << endl;
+    cout << "\nStudent Directory " << endl;
 
     for (auto record : studentDirectory)
     {
@@ -231,6 +233,42 @@ void viewStudentDirectory()
     }
 }
 
+void searchStudent()
+{
+    if (students.empty())
+    {
+        cout << "\nNo students available." << endl;
+        return;
+    }
+
+    string searchName;
+
+    cout << "\nEnter Student Name: ";
+    cin >> searchName;
+
+    bool found = false;
+
+    for (int i = 0; i < students.size(); i++)
+    {
+        if (students[i].getName() == searchName)
+        {
+            cout << "\nStudent Found!" << endl;
+            students[i].display();
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        cout << "\nStudent not found!" << endl;
+    }
+}
+
+void totalStudents()
+{
+    cout << "\nTotal Students : " << students.size() << endl;
+}
 void premiumStudentDemo()
 {
     PremiumStudent p1;
@@ -238,7 +276,7 @@ void premiumStudentDemo()
     p1.input();
     p1.setScholarship(5000);
 
-    cout << "\nPremium Student" << endl;
+    cout << "\n Premium Student " << endl;
     p1.display();
 }
 
@@ -272,10 +310,18 @@ int main()
             break;
 
         case 5:
-            premiumStudentDemo();
+            searchStudent();
             break;
 
         case 6:
+            totalStudents();
+            break;
+
+        case 7:
+            premiumStudentDemo();
+            break;
+
+        case 8:
             cout << "\nThank you for using Student Grade Tracker!" << endl;
             break;
 
@@ -283,7 +329,7 @@ int main()
             cout << "\nInvalid choice! Please try again." << endl;
         }
 
-    } while (choice != 6);
+    } while (choice != 8);
 
     return 0;
 }
